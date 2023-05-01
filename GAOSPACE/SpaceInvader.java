@@ -10,7 +10,7 @@ public class SpaceInvader extends JPanel implements Commons{
 	JFrame MainFrame = new JFrame();
 	
 	public SpaceInvader() {
-		ImageIcon bg = new ImageIcon("bgmain.png");
+		ImageIcon bg = new ImageIcon("img/bgmain.png");
 		backGround = bg.getImage();	
 
 		Level1 = new JButton("Start");

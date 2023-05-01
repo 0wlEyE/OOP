@@ -22,8 +22,8 @@ public class Board extends JPanel implements Runnable, Commons {
 
 	private boolean ingame = true;
 	private boolean havewon = true;
-	private final String expl = "explosion.png";
-	private final String alienpix = "amogus.png";
+	private final String expl = "img/explosion.png";
+	private final String alienpix = "img/amogus.png";
 	private String message = "You Died";
 
 	private Thread animator;
@@ -250,7 +250,7 @@ public class Board extends JPanel implements Runnable, Commons {
 				if (y > GROUND - ALIEN_HEIGHT) {
 					havewon = false;
 					ingame = false;
-					message = "Aliens est�o invadindo a gal�xia!";
+					message = "Aliens invaded a galaxy!";
 				}
 
 				alien.act(direction);

@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class GameOver extends Sprite {
 
-	private final String gameOver = "gameover.png";
+	private final String gameOver = "img/gameover.png";
 	private int width;
 
 	public GameOver() {

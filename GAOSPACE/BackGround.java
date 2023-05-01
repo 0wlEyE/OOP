@@ -1,7 +1,7 @@
 import javax.swing.ImageIcon;
 
 public class BackGround extends Sprite{
-    private final String bg = "bgnew.png";
+    private final String bg = "img/bgnew.png";
     private int width;
 
     /*

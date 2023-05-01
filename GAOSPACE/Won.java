@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
  * @author 
  */
 public class Won extends Sprite implements Commons{
-    private final String won = "won.jpg";
+    private final String won = "img/won.jpg";
     private int width;
 
     /*

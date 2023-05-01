@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Shot extends Sprite {
 
-    private String shot = "alreal.png";
+    private String shot = "img/alreal.png";
     private final int H_SPACE = 6;
     private final int V_SPACE = 1;
 
