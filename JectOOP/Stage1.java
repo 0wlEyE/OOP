@@ -9,6 +9,7 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 
 	private Dimension d;
 	private ArrayList<Object> aliens;
+	private ArrayList<Object> tankers;
 	private Player player;
 	private Bullet shot;
 	private GameOver gameend;
@@ -17,13 +18,21 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 
 	private int alienX = 150;
 	private int alienY = 25;
+
+	private int tankerx = 150;
+	private int tankery = 230;
+
 	private int direction = -1;
 	private int deaths = 0;
+	private int cntshot = 0;
+
+	
 
 	private boolean ingame = true;
 	private boolean havewon = true;
 	private final String expl = "img/explosion.png";
 	private final String alienpix = "img/Alien.png";
+	private final String tnkpic = "img/Tanker.png";
 	private String message = "You Died";
 
 	private Thread animator;
@@ -50,11 +59,23 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(alienpix));
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 6; j++) {
 				Alien alien = new Alien(alienX + 50 * j, alienY + 50 * i);
 				alien.setImage(ii.getImage());
 				aliens.add(alien);
+			}
+		}
+
+		tankers = new ArrayList<Object>();
+
+		ImageIcon II = new ImageIcon(this.getClass().getResource(tnkpic));
+
+		for (int i = 0; i < 1; i++){
+			for (int j = 0; j < 6; j++){
+				AlienTanker tank = new AlienTanker(tankerx + 50 * j, tankery + 50 * i);
+				tank.setImage(II.getImage());
+				tankers.add(tank);
 			}
 		}
 
@@ -79,6 +100,22 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 
 			if (alien.isDying()) {
 				alien.die();
+			}
+		}
+	}
+
+	public void drawTanker(Graphics g) {
+		Iterator<Object> tk = tankers.iterator();
+
+		while (tk.hasNext()) {
+			AlienTanker tan = (AlienTanker) tk.next();
+
+			if (tan.isVisible()) {
+				g.drawImage(tan.getImage(), tan.getX(), tan.getY(), this);
+			}
+
+			if (tan.isDying()) {
+				tan.die();;
 			}
 		}
 	}
@@ -138,6 +175,7 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 			drawPlayer(g);
 			drawShot(g);
 			drawBombing(g);
+			drawTanker(g);
 			
 		}
 
@@ -184,12 +222,13 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 		}
 
 		// player
-
+        
 		player.act();
 
 		// shot
 		if (shot.isVisible()) {
 			Iterator<Object> it = aliens.iterator();
+			Iterator<Object> tk = tankers.iterator();
 			int shotX = shot.getX();
 			int shotY = shot.getY();
 
@@ -211,12 +250,41 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 				}
 			}
 
+			while (tk.hasNext()) {
+				AlienTanker tan = (AlienTanker) tk.next();
+				int tankerx = tan.getX();
+				int tankery = tan.getY();
+
+				if (tan.isVisible() && shot.isVisible()) {
+					if (shotX >= (tankerx) && shotX <= (tankerx + TANKER_WIDTH)
+							&& shotY >= (tankery)
+							&& shotY <= (tankery + TANKER_WIDTH)) {
+						ImageIcon II = new ImageIcon(getClass().getResource(expl));
+						// ImageIcon AA = new ImageIcon(this.getClass().getResource(alienpix));
+						// tan.setImage(AA.getImage());
+						cntshot++;
+						shot.die();	
+						System.out.println("hit");
+
+						if (cntshot == TANKER_HITPOINT){
+							System.out.println("die");
+							tan.setImage(II.getImage());
+							tan.setDying(true);
+							deaths++;
+							shot.die();	
+							cntshot = 0;
+						}
+					}
+						
+				}
+			}
+
 			int y = shot.getY();
 			y -= 8;
 			if (y < 0)
 				shot.die();
 			else
-				shot.setY(y);
+			shot.setY(y);
 		}
 
 		// aliens
@@ -228,21 +296,35 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 			int x = a1.getX();
 
 			if (x >= BOARD_WIDTH - BORDER_RIGHT && direction != -1) {
-				direction = -1;
+				direction = -5;
 				Iterator<Object> i1 = aliens.iterator();
 				while (i1.hasNext()) {
 					Alien a2 = (Alien) i1.next();
 					a2.setY(a2.getY() + GO_DOWN);
 				}
+
+				Iterator<Object> tk1 = tankers.iterator();
+
+				while (tk1.hasNext()) {
+					AlienTanker tan = (AlienTanker) tk1.next();
+					tan.setY(tan.getY() + GO_DOWN);
+				}
 			}
 
 			if (x <= BORDER_LEFT && direction != 1) {
-				direction = 1;
+				direction = 5;
 
 				Iterator<Object> i2 = aliens.iterator();
 				while (i2.hasNext()) {
 					Alien a = (Alien) i2.next();
 					a.setY(a.getY() + GO_DOWN);
+				}
+
+				Iterator<Object> tk1 = tankers.iterator();
+
+				while (tk1.hasNext()) {
+					AlienTanker tan = (AlienTanker) tk1.next();
+					tan.setY(tan.getY() + GO_DOWN);
 				}
 			}
 		}
@@ -265,13 +347,64 @@ public class Stage1 extends JPanel implements Runnable, DefaultCode {
 			}
 		}
 
+		// Tankers
+		
+		Iterator<Object> tk = tankers.iterator();
+		
+		while (tk.hasNext()) {
+			AlienTanker t1 = (AlienTanker)tk.next();
+			int x = t1.getX();
+
+			if (x >= BOARD_WIDTH - BORDER_RIGHT && direction != -1){
+				direction = -1;
+
+				// Iterator<Object> tk1 = tankers.iterator();
+
+				// while (tk1.hasNext()) {
+				// 	AlienTanker tan = (AlienTanker) tk1.next();
+				// 	tan.setY(tan.getY() + GO_DOWN);
+				// }
+			}
+
+			if (x <= BORDER_LEFT && direction != 1) {
+				direction = 1;
+
+				// Iterator<Object> tk2 = tankers.iterator();
+
+				// while (tk2.hasNext()) {
+				// 	AlienTanker tan = (AlienTanker) tk2.next();
+				// 	tan.setY(tan.getY() + GO_DOWN);
+				// }
+			}
+
+		}
+
+		Iterator<Object> tan = tankers.iterator();
+
+		while (tan.hasNext()) {
+			AlienTanker tank = (AlienTanker) tan.next();
+			if (tank.isVisible()) {
+
+				int y = tank.getY();
+
+				if (y > GROUND - TANKER_HEIGHT) {
+					havewon = false;
+					ingame = false;
+					message = "Aliens invaded a galaxy!";
+				}
+
+				tank.act(direction);
+			}
+		}
+
+
 		// bombs
 
 		Iterator<Object> i3 = aliens.iterator();
 		Random generator = new Random();
 
 		while (i3.hasNext()) {
-			int shot = generator.nextInt(15);
+			int shot = generator.nextInt(200);
 			Alien a = (Alien) i3.next();
 			Bomb b = a.getBomb();
 			if (shot == CHANCE && a.isVisible() && b.isDestroyed()) {

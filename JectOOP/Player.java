@@ -39,11 +39,11 @@ public class Player extends Sprite implements DefaultCode {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_LEFT) {
-			dx = -2;
+			dx = -5;
 		}
 
 		if (key == KeyEvent.VK_RIGHT) {
-			dx = 2;
+			dx = 5;
 		}
 
 	}

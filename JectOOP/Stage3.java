@@ -271,7 +271,7 @@ public class Stage3 extends JPanel implements Runnable, DefaultCode {
 		Random generator = new Random();
 
 		while (i3.hasNext()) {
-			int shot = generator.nextInt(15);
+			int shot = generator.nextInt(500);
 			Alien a = (Alien) i3.next();
 			Bomb b = a.getBomb();
 			if (shot == CHANCE && a.isVisible() && b.isDestroyed()) {
@@ -297,7 +297,7 @@ public class Stage3 extends JPanel implements Runnable, DefaultCode {
 			}
 
 			if (!b.isDestroyed()) {
-				b.setY(b.getY() + 1);
+				b.setY(b.getY() + 2);
 				if (b.getY() >= GROUND - BOMB_HEIGHT) {
 					b.setDestroyed(true);
 				}

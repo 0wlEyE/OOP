@@ -271,7 +271,7 @@ public class Stage2 extends JPanel implements Runnable, DefaultCode {
 		Random generator = new Random();
 
 		while (i3.hasNext()) {
-			int shot = generator.nextInt(15);
+			int shot = generator.nextInt(2000);
 			Alien a = (Alien) i3.next();
 			Bomb b = a.getBomb();
 			if (shot == CHANCE && a.isVisible() && b.isDestroyed()) {
