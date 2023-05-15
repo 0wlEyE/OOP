@@ -8,10 +8,13 @@ public class Player extends Sprite implements DefaultCode {
 	private final int START_X = 470;
 
 	private final String player = "img/Player.PNG";
+	private final String expl = "img/explosion.png";
+	ImageIcon ii, II;
+
 	private int width;
 
 	public Player() {
-		ImageIcon ii = new ImageIcon(this.getClass().getResource(player));
+		ii = new ImageIcon(this.getClass().getResource(player));
 
 		width = ii.getImage().getWidth(null);
 
@@ -51,5 +54,11 @@ public class Player extends Sprite implements DefaultCode {
 		if (key == KeyEvent.VK_RIGHT) {
 			dx = 0;
 		}
+	}
+
+	public void destroyed(){
+		ImageIcon ii = new ImageIcon(this.getClass().getResource(expl));
+		this.setImage(ii.getImage());
+		this.setDying(true);
 	}
 }

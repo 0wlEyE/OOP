@@ -35,22 +35,21 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 	private int direction = -1;
 	private int deaths = 0;
-	private int cntshot = 0;
+
 
 	private boolean ingame = true;
 	private boolean havewon = true;
-	private final String expl = "img/explosion.png";
+
 	private final String alienpix = "img/Alien.png";
 	private final String tnkpic = "img/Tanker.png";
-	// private String message = "You Died";
+
 
 	private Thread animator;
 
+	// Default constructor
 	public Stage(){
 		this(0, 0, 0, 0, null);
 	}
-
-	
 
 	public Stage(int numstage, int alienrow, int tankerrow, int enemyCol, JFrame fr) {	
 
@@ -68,7 +67,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		progressbar();
 	}
 
-
+	// Game Init
 	public void gameInit() {
 		aliens = new ArrayList<Object>();
 
@@ -105,6 +104,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		}
 	}
 
+	// Drawing section
 	public void drawAliens(Graphics g) {
 		Iterator<Object> it = aliens.iterator();
 
@@ -206,28 +206,27 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
         g2.setColor(getBackground());
     }
 
+
+
+	// Create gameover frame
 	public void gameOver() {
 		Graphics g = this.getGraphics();
 
 		gameend = new GameOver();
 		vunnet = new WonGame();
 
-		// g.setColor(Color.black);
+
 		g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGTH);
 		if (havewon == true) {
 			g.drawImage(vunnet.getImage(), 0, 0, this);
 		} else {
-			
-			// this.setVisible(false);
 			fr.dispose();
 			new FrameGameOver();
-			
-			
-			
 		}
 		
 	}
 
+	// Animation cycle
 	public void animationCycle() {
 		boolean cond1 = numStage == 1 && deaths == NUMBER_OF_ALIENS_TO_DESTROY1;
 		boolean cond2 = numStage == 2 && deaths == NUMBER_OF_ALIENS_TO_DESTROY2;
@@ -239,17 +238,18 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		}
 		
 
-		// player
+		// Player - action
         
 		player.act();
 
-		// shot
+		// Player - shot
 		if (shot.isVisible()) {
 			Iterator<Object> it = aliens.iterator();
 			Iterator<Object> tk = tankers.iterator();
 			int shotX = shot.getX();
 			int shotY = shot.getY();
 
+			// hit alien?
 			while (it.hasNext()) {
 				Alien alien = (Alien) it.next();
 				int alienX = alien.getX();
@@ -259,12 +259,11 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					if (shotX >= (alienX) && shotX <= (alienX + ALIEN_WIDTH)
 							&& shotY >= (alienY)
 							&& shotY <= (alienY + ALIEN_HEIGHT)) {
-						ImageIcon ii = new ImageIcon(getClass().getResource(expl));
-						alien.setImage(ii.getImage());
-						alien.setDying(true);
-						deaths++;
-						shot.die();
+						
+						deaths += alien.gotShot();
 						bar.setValue(deaths);
+						shot.die();
+
 						if (bar.getValue() == 10){
 							bar.setString("Fever!!");
 							ragemode = true;
@@ -272,7 +271,8 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					}
 				}
 			}
-
+			
+			// hit tanker?
 			while (tk.hasNext()) {
 				AlienTanker tan = (AlienTanker) tk.next();
 				int tankerx = tan.getX();
@@ -282,18 +282,16 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					if (shotX >= (tankerx) && shotX <= (tankerx + TANKER_WIDTH)
 							&& shotY >= (tankery)
 							&& shotY <= (tankery + TANKER_WIDTH)) {
-						ImageIcon II = new ImageIcon(getClass().getResource(expl));
-						cntshot++;
+						
+						// player shot tank
+						int result = tan.setHP(tan.getHP()-1);
 						shot.die();	
 						System.out.println("hit");
-
-						if (cntshot == TANKER_HITPOINT){
+						
+						// tank dead
+						if (result == 1){
 							System.out.println("die");
-							tan.setImage(II.getImage());
-							tan.setDying(true);
 							deaths++;
-							shot.die();	
-							cntshot = 0;
 							bar.setValue(deaths);
 							if (bar.getValue() == 10){
 								bar.setString("Fever!!");
@@ -313,7 +311,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 			shot.setY(y);
 		}
 
-		//shot - rage mode
+		// Player - shot - rage mode
 		if (shotExtra.isVisible()) {
 			Iterator<Object> it = aliens.iterator();
 			Iterator<Object> tk = tankers.iterator();
@@ -321,8 +319,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 			int shotX = shotExtra.getX();
 			int shotY = shotExtra.getY();
 
-
-
+			// hit alien?
 			while (it.hasNext()) {
 				Alien alien = (Alien) it.next();
 				int alienX = alien.getX();
@@ -332,12 +329,10 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					if (shotX >= (alienX) && shotX <= (alienX + ALIEN_WIDTH)
 							&& shotY >= (alienY)
 							&& shotY <= (alienY + ALIEN_HEIGHT)) {
-						ImageIcon ii = new ImageIcon(getClass().getResource(expl));
-						alien.setImage(ii.getImage());
-						alien.setDying(true);
-						deaths++;
-						shotExtra.die();
+						deaths += alien.gotShot();
 						bar.setValue(deaths);
+						shotExtra.die();
+
 						if (bar.getValue() == 10){
 							bar.setString("Fever!!");
 						}
@@ -345,6 +340,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 				}
 			}
 
+			// hit tanker?
 			while (tk.hasNext()) {
 				AlienTanker tan = (AlienTanker) tk.next();
 				int tankerx = tan.getX();
@@ -354,21 +350,20 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					if (shotX >= (tankerx) && shotX <= (tankerx + TANKER_WIDTH)
 							&& shotY >= (tankery)
 							&& shotY <= (tankery + TANKER_WIDTH)) {
-						ImageIcon II = new ImageIcon(getClass().getResource(expl));
-						cntshot++;
-						shotExtra.die();	
+						
+						// player shot tank
+						int result = tan.setHP(tan.getHP()-1);
+						shot.die();	
 						System.out.println("hit");
-
-						if (cntshot == TANKER_HITPOINT){
+						
+						// tank dead
+						if (result == 1){
 							System.out.println("die");
-							tan.setImage(II.getImage());
-							tan.setDying(true);
 							deaths++;
-							shotExtra.die();	
-							cntshot = 0;
 							bar.setValue(deaths);
 							if (bar.getValue() == 10){
 								bar.setString("Fever!!");
+								ragemode = true;
 							}
 						}
 					}
@@ -384,8 +379,8 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 				shotExtra.setY(y);
 		}
 
-		// aliens
 
+		// Aliens
 		Iterator<Object> it1 = aliens.iterator();
 
 		while (it1.hasNext()) {
@@ -445,7 +440,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		}
 
 		// Tankers
-		
 		Iterator<Object> tk = tankers.iterator();
 		
 		while (tk.hasNext()) {
@@ -481,8 +475,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		}
 
 
-		// bombs
-
+		// alien - bombs
 		Iterator<Object> i3 = aliens.iterator();
 		Random generator = new Random();
 
@@ -504,9 +497,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 			if (player.isVisible() && !b.isDestroyed()) {
 				if (bombX >= (playerX - (PLAYER_WIDTH / 2)) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 20)) {
-					ImageIcon ii = new ImageIcon(this.getClass().getResource(expl));
-					player.setImage(ii.getImage());
-					player.setDying(true);
+					player.destroyed();
 					b.setDestroyed(true);
 				}
 			}
@@ -532,6 +523,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		}
 	}
 
+	// progress bar - rage mode
 	public void progressbar(){
 		this.setLayout(new BorderLayout());
 		bar = new JProgressBar(JProgressBar.VERTICAL, 0, 10);
@@ -542,6 +534,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		this.add(bar, BorderLayout.WEST);
 	}
 
+	// run game
 	public void run() {
 		long beforeTime, timeDiff, sleep;
 
@@ -564,6 +557,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		gameOver();
 	}
 
+	// Listener
 	private class TAdapter extends KeyAdapter {
 
 		public void keyReleased(KeyEvent e) {
