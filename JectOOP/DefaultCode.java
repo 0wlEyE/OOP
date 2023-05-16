@@ -19,11 +19,4 @@ public abstract interface DefaultCode {
     public static final int PLAYER_HEIGHT = 35;
     public static final int TANKER_HITPOINT = 3;
     public static final int DefaultSpSHO = 1000;
-
-    // ภาพ Shot เดิม 10x10 -> 20x20
-    // ภาพ Player เดิม 25x25 -> 35x35
-    // ขนาด Frame เดิม 640x480 -> 840x680
-    // ภาพ Alien เดิม 25x25 -> 35x35
-    // ภาพ Explosion -> 25x25
-    // ต้องการภาพ Player, Alien, Shot, Bomb, Explosion, MainBackGround, IngameBackGround, EndGameBackGround
 }

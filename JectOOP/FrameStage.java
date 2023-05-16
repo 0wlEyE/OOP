@@ -3,7 +3,6 @@ import javax.swing.*;
 
 public class FrameStage extends StageSelect{
 
-
     JProgressBar bar;
     public JFrame frame; 
 
@@ -35,17 +34,4 @@ public class FrameStage extends StageSelect{
             frame.add(new Stage(3, 3, 2, 10, frame));
         }
     }
-
-    // @Override
-    // public void Stage_2() {
-    //     frame.add(new Stage(2, 5, 1, 6, frame));
-        
-    // }
-
-    // @Override
-    // public void Stage_3() {
-    //     frame.add(new Stage(3, 3, 2, 10, frame));
-        
-    // }
-
 }

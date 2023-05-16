@@ -17,12 +17,11 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 	private Player player;
 	private Bullet shot;
-
 	private boolean ragemode = false;
 	private Bullet shotExtra;
 	
 	private GameOver gameend;
-	private WonGame vunnet;
+	private WonGame win;
 	private BackGround background;
 
 	private JProgressBar bar;
@@ -69,6 +68,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 	// Game Init
 	public void gameInit() {
+
 		aliens = new ArrayList<Object>();
 
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(alienpix));
@@ -200,25 +200,19 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 		Toolkit.getDefaultToolkit().sync();
 		g.dispose();
 	}
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(getBackground());
-    }
-
-
+    
 
 	// Create gameover frame
 	public void gameOver() {
 		Graphics g = this.getGraphics();
 
 		gameend = new GameOver();
-		vunnet = new WonGame();
+		win = new WonGame();
 
 
 		g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGTH);
 		if (havewon == true) {
-			g.drawImage(vunnet.getImage(), 0, 0, this);
+			g.drawImage(win.getImage(), 0, 0, this);
 		} else {
 			fr.dispose();
 			new FrameGameOver(numStage);
@@ -262,6 +256,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						
 						deaths += alien.gotShot();
 						bar.setValue(deaths);
+						System.out.println(deaths);
 						shot.die();
 
 						if (bar.getValue() == 10){
@@ -286,13 +281,13 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						// player shot tank
 						int result = tan.setHP(tan.getHP()-1);
 						shot.die();	
-						System.out.println("hit");
+						// System.out.println("hit");
 						
 						// tank dead
 						if (result == 1){
-							System.out.println("die");
-							deaths++;
+							++deaths;
 							bar.setValue(deaths);
+							System.out.println(deaths);
 							if (bar.getValue() == 10){
 								bar.setString("Fever!!");
 								ragemode = true;
@@ -332,6 +327,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						deaths += alien.gotShot();
 						bar.setValue(deaths);
 						shotExtra.die();
+						System.out.println(deaths);
 
 						if (bar.getValue() == 10){
 							bar.setString("Fever!!");
@@ -354,13 +350,15 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						// player shot tank
 						int result = tan.setHP(tan.getHP()-1);
 						shot.die();	
-						System.out.println("hit");
+						shotExtra.die();
+						// System.out.println("hit");
 						
 						// tank dead
 						if (result == 1){
-							System.out.println("die");
-							deaths++;
+							// System.out.println("die");
+							++deaths;
 							bar.setValue(deaths);
+							System.out.println(deaths);
 							if (bar.getValue() == 10){
 								bar.setString("Fever!!");
 								ragemode = true;
@@ -497,7 +495,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 			if (player.isVisible() && !b.isDestroyed()) {
 				if (bombX >= (playerX - (PLAYER_WIDTH / 2)) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 20)) {
-					player.destroyed();
 					b.setDestroyed(true);
 				}
 			}
@@ -573,11 +570,12 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 				
 				int key = e.getKeyCode();
 				if (key == KeyEvent.VK_SPACE){
-					if (!shot.isVisible()){
+					if (!shot.isVisible() && !ragemode){
 						shot = new Bullet(x, y);
 					}else if(ragemode && !shotExtra.isVisible()){
-						shotExtra = new Bullet(x, y);
-						System.out.println("double!");
+						shot = new Bullet(x, y);
+						shotExtra = new Bullet(x, shot.getY() + 100);
+						// System.out.println("double!");
 					}
 				}
 			}

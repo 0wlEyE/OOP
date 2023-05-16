@@ -15,7 +15,7 @@ public class FrameGameOver extends JPanel implements MouseListener {
     JFrame fr;
 
     Image background;
-    private String message = "You Died";
+    
 
     public FrameGameOver() {
         this(0);
@@ -55,8 +55,7 @@ public class FrameGameOver extends JPanel implements MouseListener {
         g2d.draw(retry);
         
         g2d.draw(menu);
-        g.drawString(message, 840 / 2 - 115, 400);
-
+        
         
     }
 
