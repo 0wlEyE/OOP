@@ -24,22 +24,28 @@ public class FrameStage extends StageSelect{
     
 
     @Override
-    public void Stage_1() {
-        
-        frame.add(new Stage(1, 3, 1, 6, frame));
-        
+    public void createStage(int num) {
+        if (num == 1){
+            frame.add(new Stage(1, 3, 1, 6, frame));
+        }
+        if (num == 2){
+            frame.add(new Stage(2, 5, 1, 6, frame));
+        }
+        if (num == 3){
+            frame.add(new Stage(3, 3, 2, 10, frame));
+        }
     }
 
-    @Override
-    public void Stage_2() {
-        frame.add(new Stage(2, 5, 1, 6, frame));
+    // @Override
+    // public void Stage_2() {
+    //     frame.add(new Stage(2, 5, 1, 6, frame));
         
-    }
+    // }
 
-    @Override
-    public void Stage_3() {
-        frame.add(new Stage(3, 3, 2, 10, frame));
+    // @Override
+    // public void Stage_3() {
+    //     frame.add(new Stage(3, 3, 2, 10, frame));
         
-    }
+    // }
 
 }

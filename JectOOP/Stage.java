@@ -221,7 +221,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 			g.drawImage(vunnet.getImage(), 0, 0, this);
 		} else {
 			fr.dispose();
-			new FrameGameOver();
+			new FrameGameOver(numStage);
 		}
 		
 	}

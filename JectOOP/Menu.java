@@ -56,15 +56,15 @@ public class Menu extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (Stage1.contains(e.getX(), e.getY())) {
             fr.dispose();
-            new FrameStage().Stage_1();
+            new FrameStage().createStage(1);
             System.out.println("1");
         } else if (Stage2.contains(e.getX(), e.getY())) {
             fr.dispose();
-            new FrameStage().Stage_2();
+            new FrameStage().createStage(2);
             System.out.println("2");
         } else if (Stage3.contains(e.getX(), e.getY())) {
             fr.dispose();
-            new FrameStage().Stage_3();
+            new FrameStage().createStage(3);
             System.out.println("3");
         }
     }

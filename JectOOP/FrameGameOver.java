@@ -6,6 +6,8 @@ import javax.swing.*;
 
 public class FrameGameOver extends JPanel implements MouseListener {
 
+    private int numStage;
+
     private int posiL;
     private int posiR;
 
@@ -16,7 +18,10 @@ public class FrameGameOver extends JPanel implements MouseListener {
     private String message = "You Died";
 
     public FrameGameOver() {
-
+        this(0);
+    }
+    public FrameGameOver(int num){
+        numStage = num;
 
         posiL = 840 / 2 - (200 + 80);
         posiR = 840 / 2 + 80;
@@ -37,7 +42,6 @@ public class FrameGameOver extends JPanel implements MouseListener {
         fr.setResizable(false);
         fr.setVisible(true);
         fr.addMouseListener(this);
-
     }
 
     public void render(Graphics g) {
@@ -70,13 +74,15 @@ public class FrameGameOver extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (retry.contains(e.getX(), e.getY())) {
-            
-            
             System.out.println("Retry");
+            fr.dispose();
+            new FrameStage().createStage(numStage);
+
         } else if (menu.contains(e.getX(), e.getY())) {
             
-            
             System.out.println("Back to Menu");
+            fr.dispose();
+            new Menu();
         }
     }
 
