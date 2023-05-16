@@ -21,7 +21,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 	private Bullet shotExtra;
 	
 	private GameOver gameend;
-	private WonGame win;
 	private BackGround background;
 
 	private JProgressBar bar;
@@ -206,13 +205,11 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 	public void gameOver() {
 		Graphics g = this.getGraphics();
 
-		gameend = new GameOver();
-		win = new WonGame();
-
 
 		g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGTH);
 		if (havewon == true) {
-			g.drawImage(win.getImage(), 0, 0, this);
+			fr.dispose();
+			new FrameWonGame(numStage);
 		} else {
 			fr.dispose();
 			new FrameGameOver(numStage);
@@ -495,6 +492,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 			if (player.isVisible() && !b.isDestroyed()) {
 				if (bombX >= (playerX - (PLAYER_WIDTH / 2)) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 20)) {
+					player.destroyed();
 					b.setDestroyed(true);
 				}
 			}
