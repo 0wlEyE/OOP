@@ -8,7 +8,7 @@ public class Player extends Sprite implements DefaultCode {
 	private final int START_X = 470;
 
 	private final String player = "img/Player.PNG";
-	ImageIcon ii, II;
+	ImageIcon ii;
 
 	private int width;
 
@@ -53,5 +53,9 @@ public class Player extends Sprite implements DefaultCode {
 		if (key == KeyEvent.VK_RIGHT) {
 			dx = 0;
 		}
+	}
+
+	public void destroyed(){
+		this.setDying(true);
 	}
 }

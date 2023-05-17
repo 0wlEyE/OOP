@@ -4,12 +4,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-public class FrameGameOver extends JPanel implements MouseListener {
+public class FrameFinal extends JPanel implements MouseListener {
 
-    private int numStage;
 
-    private int posiL;
-    private int posiR;
+    private int posi;
 
     Rectangle retry, menu;
     JFrame fr;
@@ -17,20 +15,19 @@ public class FrameGameOver extends JPanel implements MouseListener {
     Image background;
     
 
-    public FrameGameOver() {
+    public FrameFinal() {
         this(0);
     }
-    public FrameGameOver(int num){
-        numStage = num;
+    public FrameFinal(int num){
 
-        posiL = 840 / 2 - (200 + 80);
-        posiR = 840 / 2 + 80;
 
-        retry = new Rectangle( posiL - 13, 450, 200, 100);
-        menu = new Rectangle( posiR - 13, 450, 200, 100);
+        posi = 840 / 2;
+    
+        
+        menu = new Rectangle( posi, 450, 200, 100);
         fr = new JFrame("GAO Space");
 
-        ImageIcon ii = new ImageIcon("img/gameover.png");
+        ImageIcon ii = new ImageIcon("img/won.png");
         background = ii.getImage();
         
 
@@ -48,11 +45,8 @@ public class FrameGameOver extends JPanel implements MouseListener {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font("", Font.BOLD, 50));
-        g2d.setColor(Color.white);
-        g2d.drawString("Retry", (840 / 2) - (178 + 80), 500 + 18);
-        
-        g2d.drawString("Menu", (840 / 2) + 100, 500 + 18);
-        g2d.draw(retry);
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("Menu", (840 / 2), 500 + 18);
         
         g2d.draw(menu);
         
@@ -67,14 +61,10 @@ public class FrameGameOver extends JPanel implements MouseListener {
     }
 
 
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (retry.contains(e.getX(), e.getY())) {
-            System.out.println("Retry");
-            fr.dispose();
-            new FrameStage().createStage(numStage);
-
-        } else if (menu.contains(e.getX(), e.getY())) {
+        if (menu.contains(e.getX(), e.getY())) {
             
             System.out.println("Back to Menu");
             fr.dispose();

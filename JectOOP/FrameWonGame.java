@@ -66,9 +66,7 @@ public class FrameWonGame extends JPanel implements MouseListener {
 
     }
 
-    public static void main(String[] args) {
-        new Menu();
-    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

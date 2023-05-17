@@ -2,7 +2,7 @@ public abstract interface DefaultCode {
     public static final int BOARD_WIDTH = 840;
     public static final int BOARD_HEIGTH = 680;
     public static final int GROUND = 640;
-    public static final int BOMB_HEIGHT = 10;
+    public static final int BOMB_HEIGHT = 20;
     public static final int ALIEN_HEIGHT = 35;
     public static final int ALIEN_WIDTH = 35;
     public static final int TANKER_HEIGHT = 35;
