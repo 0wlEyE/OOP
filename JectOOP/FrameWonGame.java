@@ -73,9 +73,9 @@ public class FrameWonGame extends JPanel implements MouseListener {
         if (retry.contains(e.getX(), e.getY())) {
             System.out.println("Next");
             fr.dispose();
-            if (numStage == 3){
-                new FrameStage().createStage(numStage);
-            }
+            // if (numStage == 3){
+            //     new FrameStage().createStage(numStage);
+            // }
             new FrameStage().createStage(numStage + 1);
 
         } else if (menu.contains(e.getX(), e.getY())) {

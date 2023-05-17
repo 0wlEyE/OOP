@@ -207,9 +207,12 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 
 		g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGTH);
-		if (havewon == true) {
+		if (havewon == true && numStage != 3) {
 			fr.dispose();
 			new FrameWonGame(numStage);
+		} else if (havewon == true && numStage == 3){
+			fr.dispose();;
+			new FrameFinal();
 		} else {
 			fr.dispose();
 			new FrameGameOver(numStage);
@@ -492,7 +495,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 			if (player.isVisible() && !b.isDestroyed()) {
 				if (bombX >= (playerX - (PLAYER_WIDTH / 2)) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 20)) {
-					player.destroyed();
+					// player.destroyed();
 					b.setDestroyed(true);
 				}
 			}

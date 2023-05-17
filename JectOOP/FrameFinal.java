@@ -21,13 +21,13 @@ public class FrameFinal extends JPanel implements MouseListener {
     public FrameFinal(int num){
 
 
-        posi = 840 / 2;
+        posi = (840 / 2) - 100;
     
         
         menu = new Rectangle( posi, 450, 200, 100);
         fr = new JFrame("GAO Space");
 
-        ImageIcon ii = new ImageIcon("img/won.png");
+        ImageIcon ii = new ImageIcon("img/mid.png");
         background = ii.getImage();
         
 
@@ -46,7 +46,7 @@ public class FrameFinal extends JPanel implements MouseListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font("", Font.BOLD, 50));
         g2d.setColor(Color.BLACK);
-        g2d.drawString("Menu", (840 / 2), 500 + 18);
+        g2d.drawString("Menu", (840 / 2) - 65, 500 + 18);
         
         g2d.draw(menu);
         
