@@ -47,15 +47,26 @@ public class FrameWonGame extends JPanel implements MouseListener {
     public void render(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setFont(new Font("", Font.BOLD, 50));
-        g2d.setColor(Color.BLACK);
-        g2d.drawString("Next", (840 / 2) - (178 + 80), 500 + 18);
-        
-        g2d.drawString("Menu", (840 / 2) + 100, 500 + 18);
-        g2d.draw(retry);
-        
-        g2d.draw(menu);
-        
+
+        if (numStage != 3){
+            g2d.setFont(new Font("", Font.BOLD, 50));
+            g2d.setColor(Color.BLACK);
+            g2d.drawString("Next", (840 / 2) - (178 + 80), 500 + 18);
+            
+            g2d.drawString("Menu", (840 / 2) + 100, 500 + 18);
+            g2d.draw(retry);
+            
+            g2d.draw(menu);
+        } else if (numStage == 3) {
+
+            menu = new Rectangle( (840 / 2) - 100, 450, 200, 100);
+
+            g2d.setFont(new Font("", Font.BOLD, 50));
+            g2d.setColor(Color.BLACK);
+            g2d.drawString("Menu", (840 / 2) - 65, 500 + 18);
+            
+            g2d.draw(menu);
+        }
         
     }
 
