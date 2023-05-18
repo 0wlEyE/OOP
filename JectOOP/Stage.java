@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.*;
 
 
@@ -227,14 +229,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 			ingame = false;
 			System.out.println("Congratulation");
 		}
-
-		if (deaths == 10){
-			sound.stop();
-			sound.playSound(6);
-			sound.playMusic(2);
-		}
 		
-
 		// Player - action
         
 		player.act();
@@ -576,8 +571,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						sound.playSound(3);
 						shot = new Bullet(x, y);
 					}else if(ragemode && !shotExtra.isVisible()){
-						sound.playSound(3);
-						sound.playSound(3);
+						sound.delaySound(3);
 						shot = new Bullet(x, y);
 						shotExtra = new Bullet(x, shot.getY() + 100);
 						// System.out.println("double!");

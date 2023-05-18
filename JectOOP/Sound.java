@@ -1,4 +1,6 @@
 import java.net.*;
+import java.util.concurrent.TimeUnit;
+
 import javax.sound.sampled.*;
 
 public class Sound {
@@ -40,5 +42,17 @@ public class Sound {
     public void playSound(int i){
         setFile(i);
         clip.start();
+    }
+
+    public void delaySound(int i){
+        setFile(i);
+        try {
+            TimeUnit.SECONDS.sleep(2);
+            clip.start();
+            TimeUnit.MILLISECONDS.sleep(clip.getMicrosecondLength() / 1000);
+            clip.close();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
