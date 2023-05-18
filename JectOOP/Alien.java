@@ -5,8 +5,9 @@ public class Alien extends Sprite {
 
     ImageIcon img, ii;
 
-
     private final String alien = "img/Alien.png";
+
+    private Sound sound;
 
     public Alien(){}
 
@@ -18,10 +19,12 @@ public class Alien extends Sprite {
         img = new ImageIcon(this.getClass().getResource(alien));
         ii = new ImageIcon(getClass().getResource(alien));
         setImage(img.getImage());
+        sound = new Sound();
 
     }
 
     public int gotShot(){
+        sound.playSound(4);
         System.out.println("die");
 		this.setImage(ii.getImage());
 		this.setDying(true);

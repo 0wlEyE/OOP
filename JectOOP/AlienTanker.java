@@ -7,6 +7,8 @@ public class AlienTanker extends Sprite {
 
     private final String tanker = "img/Tanker.png";
 
+    private Sound sound;
+
     public AlienTanker(){}
 
     public AlienTanker(int x, int y) {
@@ -17,6 +19,7 @@ public class AlienTanker extends Sprite {
 
         img = new ImageIcon(this.getClass().getResource(tanker));
         setImage(img.getImage());
+        sound = new Sound();
     }
 
     public void act(int direction) {
@@ -26,8 +29,9 @@ public class AlienTanker extends Sprite {
     public int setHP(int hp){
         this.hp = hp;
         if (this.hp <= 0){
+            sound.playSound(4);
             System.out.println("die");
-				this.setDying(true);
+			this.setDying(true);
             return 1;
         }else{
             return 0;

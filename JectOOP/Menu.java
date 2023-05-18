@@ -10,6 +10,7 @@ public class Menu extends JPanel implements MouseListener {
     Rectangle Stage2 = new Rectangle(840 / 2 - 100, 450, 200, 100);
     Rectangle Stage3 = new Rectangle(840 / 2 + 150, 450, 200, 100);
     JFrame fr = new JFrame("GAO Space");
+    Sound sound = new Sound();
 
     Image background;
 
@@ -17,6 +18,7 @@ public class Menu extends JPanel implements MouseListener {
 
         ImageIcon ii = new ImageIcon("img/MenuBG.PNG");
         background = ii.getImage();
+        sound.playMusic(0);
 
         fr.add(this);
         fr.setSize(840, 680);
@@ -28,7 +30,7 @@ public class Menu extends JPanel implements MouseListener {
 
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics  g) {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font("", Font.BOLD, 50));
@@ -56,14 +58,17 @@ public class Menu extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (Stage1.contains(e.getX(), e.getY())) {
             fr.dispose();
+            sound.stop();
             new FrameStage().createStage(1);
             System.out.println("1");
         } else if (Stage2.contains(e.getX(), e.getY())) {
-            fr.dispose();
+            fr.dispose();   
+            sound.stop();
             new FrameStage().createStage(2);
             System.out.println("2");
         } else if (Stage3.contains(e.getX(), e.getY())) {
             fr.dispose();
+            sound.stop();
             new FrameStage().createStage(3);
             System.out.println("3");
         }

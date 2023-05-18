@@ -41,8 +41,8 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 	private final String alienpix = "img/Alien.png";
 	private final String tnkpic = "img/Tanker.png";
 
-
 	private Thread animator;
+	Sound sound = new Sound();
 
 	// Default constructor
 	public Stage(){
@@ -227,6 +227,12 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 			ingame = false;
 			System.out.println("Congratulation");
 		}
+
+		if (deaths == 10){
+			sound.stop();
+			sound.playSound(6);
+			sound.playMusic(2);
+		}
 		
 
 		// Player - action
@@ -250,12 +256,11 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					if (shotX >= (alienX) && shotX <= (alienX + ALIEN_WIDTH)
 							&& shotY >= (alienY)
 							&& shotY <= (alienY + ALIEN_HEIGHT)) {
-						
 						deaths += alien.gotShot();
 						bar.setValue(deaths);
 						System.out.println(deaths);
 						shot.die();
-
+						
 						if (bar.getValue() == 10){
 							bar.setString("Fever!!");
 							ragemode = true;
@@ -263,6 +268,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 					}
 				}
 			}
+			
 			
 			// hit tanker?
 			while (tk.hasNext()) {
@@ -277,9 +283,9 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						
 						// player shot tank
 						int result = tan.setHP(tan.getHP()-1);
-						shot.die();	
+						shot.die();
 						// System.out.println("hit");
-						
+
 						// tank dead
 						if (result == 1){
 							++deaths;
@@ -294,7 +300,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 						
 				}
 			}
-
 			int y = shot.getY();
 			y -= 8;
 			if (y < 0)
@@ -319,8 +324,8 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 				if (alien.isVisible() && shotExtra.isVisible()) {
 					if (shotX >= (alienX) && shotX <= (alienX + ALIEN_WIDTH)
-							&& shotY >= (alienY)
-							&& shotY <= (alienY + ALIEN_HEIGHT)) {
+					&& shotY >= (alienY)
+					&& shotY <= (alienY + ALIEN_HEIGHT)) {
 						deaths += alien.gotShot();
 						bar.setValue(deaths);
 						shotExtra.die();
@@ -358,10 +363,9 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 							System.out.println(deaths);
 							if (bar.getValue() == 10){
 								bar.setString("Fever!!");
-								ragemode = true;
 							}
 						}
-					}
+					} 
 						
 				}
 			}
@@ -492,7 +496,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 
 			if (player.isVisible() && !b.isDestroyed()) {
 				if (bombX >= (playerX - (PLAYER_WIDTH / 2)) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 20)) {
-					player.destroyed();
+					// player.destroyed();
 					b.setDestroyed(true);
 				}
 			}
@@ -569,8 +573,11 @@ public class Stage extends JPanel implements Runnable, DefaultCode {
 				int key = e.getKeyCode();
 				if (key == KeyEvent.VK_SPACE){
 					if (!shot.isVisible() && !ragemode){
+						sound.playSound(3);
 						shot = new Bullet(x, y);
 					}else if(ragemode && !shotExtra.isVisible()){
+						sound.playSound(3);
+						sound.playSound(3);
 						shot = new Bullet(x, y);
 						shotExtra = new Bullet(x, shot.getY() + 100);
 						// System.out.println("double!");
