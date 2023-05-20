@@ -24,7 +24,7 @@ public class Alien extends Sprite {
     }
 
     public int gotShot(){
-        sound.playSound(4);
+        sound.playSound(9);
 		this.setImage(img.getImage());
 		this.setDying(true);
         return 1;

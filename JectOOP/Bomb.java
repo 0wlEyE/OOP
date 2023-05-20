@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Bomb extends Sprite {
 
-	private final String bomb = "img/nbomb.png";
+	private final String bomb = "img/Alien_Shot.png";
 	private boolean destroyed;
 
 	//Constucture

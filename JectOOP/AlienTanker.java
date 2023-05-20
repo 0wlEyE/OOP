@@ -5,7 +5,7 @@ public class AlienTanker extends Sprite {
 
     ImageIcon img;
 
-    private final String tanker = "img/Tanker.png";
+    private final String tanker = "img/Alien_Shield.png";
 
     private Sound sound;
 

@@ -1,11 +1,10 @@
 import java.net.*;
-
 import javax.sound.sampled.*;
 
 public class Sound {
     
     private Clip clip;
-    private URL soundURL[] = new URL[9];
+    private URL soundURL[] = new URL[10];
 
     //Constructure
     public Sound(){
@@ -19,6 +18,7 @@ public class Sound {
         soundURL[6] = getClass().getResource("sound/bar.wav");
         soundURL[7] = getClass().getResource("sound/pewpew.wav");
         soundURL[8] = getClass().getResource("sound/victory.wav");
+        soundURL[9] = getClass().getResource("sound/tank_death.wav");
     }
 
     public void setFile(int i){

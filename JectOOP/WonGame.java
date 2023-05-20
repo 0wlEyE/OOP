@@ -1,8 +1,9 @@
 import javax.swing.ImageIcon;
 
 public class WonGame extends Sprite implements DefaultCode {
-    private final String won = "img/won.jpg";
+    private final String won = "img/Win.jpg";
 
+    //Constructure
     public WonGame() {
 
         ImageIcon img = new ImageIcon(this.getClass().getResource(won));
@@ -10,6 +11,5 @@ public class WonGame extends Sprite implements DefaultCode {
         setImage(img.getImage());
         setX(0);
         setY(0);
-        
     }
 }

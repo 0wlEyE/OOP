@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Bullet extends Sprite {
 
-    private String shot = "img/alreal.png";
+    private String shot = "img/Player_Shot.png";
     private final int bulletX = 12;
     private final int bulletY = 1;
 

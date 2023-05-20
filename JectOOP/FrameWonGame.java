@@ -34,7 +34,7 @@ public class FrameWonGame extends JPanel implements MouseListener {
         menu = new Rectangle(posRight - 13, 450, 200, 100);
         fr = new JFrame("GAO Space");
 
-        ImageIcon img = new ImageIcon("img/won.png");
+        ImageIcon img = new ImageIcon("img/Win.png");
         background = img.getImage();
         
         //Add Object
@@ -53,15 +53,15 @@ public class FrameWonGame extends JPanel implements MouseListener {
 
         if (numStage != 3){
             g2d.setFont(new Font("", Font.BOLD, 50));
-            g2d.setColor(Color.BLACK);
-            g2d.drawString("Next", (840 / 2) - (178 + 80), 500 + 18);
+            g2d.setColor(Color.WHITE);
+            g2d.drawString("Next", (840 / 2) - (178 + 70), 500 + 18);
             g2d.drawString("Menu", (840 / 2) + 100, 500 + 18);
             g2d.draw(retry);
             g2d.draw(menu);
         } else if (numStage == 3) {
             menu = new Rectangle( (840 / 2) - 100, 450, 200, 100);
             g2d.setFont(new Font("", Font.BOLD, 50));
-            g2d.setColor(Color.BLACK);
+            g2d.setColor(Color.WHITE);
             g2d.drawString("Menu", (840 / 2) - 65, 500 + 18);
             g2d.draw(menu);
         }
@@ -69,6 +69,7 @@ public class FrameWonGame extends JPanel implements MouseListener {
     }
 
     public void paintComponent(Graphics g) {
+
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
         render(g);

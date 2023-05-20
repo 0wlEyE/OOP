@@ -32,7 +32,7 @@ public class Menu extends JPanel implements MouseListener {
 
     }
 
-    public void render(Graphics  g) {
+    public void render(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font("", Font.BOLD, 50));
@@ -49,7 +49,6 @@ public class Menu extends JPanel implements MouseListener {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
         render(g);
-
     }
 
     @Override

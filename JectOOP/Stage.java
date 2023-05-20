@@ -20,7 +20,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 	private Bullet shotExtra;
 	private boolean ragemode = false;
 	
-	private GameOver gameend;
 	private BackGround background;
 
 	private JProgressBar bar;
@@ -39,7 +38,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 	private boolean ping = false;
 
 	private final String alienPic = "img/Alien.png";
-	private final String tankPic = "img/Tanker.png";
+	private final String tankPic = "img/Alien_Shield.png";
 
 	private Thread animator;
 	private Sound sound = new Sound();
@@ -151,10 +150,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 		}
 	}
 
-	public void drawGameEnd(Graphics g) {
-		g.drawImage(gameend.getImage(), 0, 0, this);
-	}
-
 	public void drawBackGround(Graphics g){
 		g.drawImage(background.getImage(), 17, 0, this);
 	}
@@ -255,7 +250,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 
 						deaths += alien.gotShot();
 						bar.setValue(deaths);
-						System.out.println(deaths);
 						shot.die();
 						
 						if (deaths == 10){
@@ -487,7 +481,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 			//player and bomb have not destroyed yet
 			if (player.isVisible() && !b.isDestroyed()) {
 				//collision
-				if (bombX >= (playerX - (PLAYER_WIDTH / 2)) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 20)) {
+				if (bombX >= (playerX - (PLAYER_WIDTH / 2) + 5) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 25)) {
 					player.destroyed();
 					b.setDestroyed(true);
 				}

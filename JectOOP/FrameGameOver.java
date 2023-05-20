@@ -18,6 +18,7 @@ public class FrameGameOver extends JPanel implements MouseListener {
 
     Sound sound = new Sound();
     
+    //Constructure
     public FrameGameOver() {
         this(0);
     }
@@ -32,7 +33,7 @@ public class FrameGameOver extends JPanel implements MouseListener {
         menu = new Rectangle( posRight - 13, 450, 200, 100);
         fr = new JFrame("GAO Space");
 
-        ImageIcon img = new ImageIcon("img/gameover.png");
+        ImageIcon img = new ImageIcon("img/Lose.png");
         background = img.getImage();
 
         fr.add(this);
