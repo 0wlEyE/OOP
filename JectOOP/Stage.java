@@ -213,7 +213,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 			music.stop();
 			new FrameGameOver(numStage);
 		}
-		
 	}
 
 	// Animation cycle
@@ -519,7 +518,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 	public void progressbar(){
 		this.setLayout(new BorderLayout());
 		bar = new JProgressBar(JProgressBar.VERTICAL, 0, 10);
-		bar.setStringPainted(false);
+		bar.setStringPainted(true);
 		bar.setForeground(Color.white);
 		bar.setBackground(Color.black);
 		bar.setBorderPainted(false);

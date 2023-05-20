@@ -31,7 +31,6 @@ public class AlienTanker extends Sprite {
         this.hp = hp;
         if (this.hp <= 0){
             sound.playSound(4);
-            System.out.println("die");
 			this.setDying(true);
             return 1;
         }else{

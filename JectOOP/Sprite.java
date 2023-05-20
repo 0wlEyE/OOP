@@ -3,11 +3,11 @@ import java.awt.Image;
 public class Sprite {
 
         protected boolean visible;
-        private Image image;
+        protected Image image;
         protected int POS_X;
         protected int POS_Y;
         protected boolean dying;
-        protected int direction;
+        protected int direction = 0;
 
         public Sprite() {
             visible = true;
@@ -21,7 +21,7 @@ public class Sprite {
             return visible;
         }
 
-        protected void setVisible(boolean visible) {
+        public void setVisible(boolean visible) {
             this.visible = visible;
         }
 
@@ -40,6 +40,7 @@ public class Sprite {
         public void setY(int y) {
             this.POS_Y = y;
         }
+        
         public int getY() {
             return POS_Y;
         }

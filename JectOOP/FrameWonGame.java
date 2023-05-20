@@ -59,9 +59,7 @@ public class FrameWonGame extends JPanel implements MouseListener {
             g2d.draw(retry);
             g2d.draw(menu);
         } else if (numStage == 3) {
-
             menu = new Rectangle( (840 / 2) - 100, 450, 200, 100);
-
             g2d.setFont(new Font("", Font.BOLD, 50));
             g2d.setColor(Color.BLACK);
             g2d.drawString("Menu", (840 / 2) - 65, 500 + 18);
@@ -80,13 +78,11 @@ public class FrameWonGame extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (retry.contains(e.getX(), e.getY())) {
-            System.out.println("Next");
             sound.stop();
             fr.dispose();
             new FrameStage().createStage(numStage + 1);
 
         } else if (menu.contains(e.getX(), e.getY())) {
-            System.out.println("Back to Menu");
             sound.stop();
             fr.dispose();
             new Menu();

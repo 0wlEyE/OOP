@@ -12,8 +12,8 @@ public class Bomb extends Sprite {
 		setDestroyed(true);
 		this.POS_X = x;
 		this.POS_Y = y;
-		ImageIcon ii = new ImageIcon(this.getClass().getResource(bomb));
-		setImage(ii.getImage());
+		ImageIcon img = new ImageIcon(this.getClass().getResource(bomb));
+		setImage(img.getImage());
 	}
 
 	public void setDestroyed(boolean destroyed) {
