@@ -67,7 +67,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 
 	}
 
-	// Game Init
 	public void gameInit() {
 
 		aliens = new ArrayList<Object>();
@@ -193,7 +192,6 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 			drawShotExtra(g);
 			
 		}
-		g.dispose();
 	}
     
 	// Create gameover frame
@@ -480,8 +478,10 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 
 			//player and bomb have not destroyed yet
 			if (player.isVisible() && !b.isDestroyed()) {
-				//collision
-				if (bombX >= (playerX - (PLAYER_WIDTH / 2) + 5) && bombX <= (playerX + PLAYER_WIDTH) && bombY >= (playerY - 25)) {
+				// Player collision
+				if (bombX >= (playerX - (PLAYER_WIDTH / 2) + 5) && 
+					bombX <= (playerX + PLAYER_WIDTH) && 
+					bombY >= (playerY - 25)) {
 					player.destroyed();
 					b.setDestroyed(true);
 				}
@@ -500,7 +500,7 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 				}
 			}
 			if (numStage == 3 && !b.isDestroyed()) {
-				b.setY(b.getY() + 2);
+				b.setY(b.getY() + 3);
 				if (b.getY() >= GROUND - BOMB_HEIGHT) {
 					b.setDestroyed(true);
 				}
@@ -533,8 +533,10 @@ public class Stage extends JPanel implements Runnable, DefaultCode, KeyListener{
 			timeDiff = System.currentTimeMillis() - beforeTime;
 			sleep = DELAY - timeDiff;
 
-			if (sleep < 0)
+			if (sleep < 0){
 				sleep = 1;
+			}
+		
 			try {
 				Thread.sleep(sleep);
 			} catch (InterruptedException e) {}

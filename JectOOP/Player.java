@@ -1,8 +1,9 @@
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 
-public class Player extends Sprite implements DefaultCode {
+public class Player extends Sprite implements DefaultCode, KeyListener{
 
 	private final int START_Y = 600;
 	private final int START_X = 470;
@@ -54,6 +55,9 @@ public class Player extends Sprite implements DefaultCode {
 		if (key == KeyEvent.VK_RIGHT) {
 			direction = 0;
 		}
+	}
+
+	public void keyTyped(KeyEvent e) {
 	}
 
 	public void destroyed(){

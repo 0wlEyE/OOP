@@ -7,7 +7,6 @@ import javax.swing.*;
 public class FrameWonGame extends JPanel implements MouseListener {
 
     private int numStage;
-
     private int posLeft;
     private int posRight;
 
@@ -65,7 +64,6 @@ public class FrameWonGame extends JPanel implements MouseListener {
             g2d.drawString("Menu", (840 / 2) - 65, 500 + 18);
             g2d.draw(menu);
         }
-        
     }
 
     public void paintComponent(Graphics g) {
@@ -73,7 +71,6 @@ public class FrameWonGame extends JPanel implements MouseListener {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
         render(g);
-
     }
 
     @Override

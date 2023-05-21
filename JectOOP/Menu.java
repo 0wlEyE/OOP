@@ -6,9 +6,9 @@ import javax.swing.*;
 
 public class Menu extends JPanel implements MouseListener {
     
-    Rectangle Stage1 = new Rectangle(840 / 2 - 350, 450, 200, 100);
-    Rectangle Stage2 = new Rectangle(840 / 2 - 100, 450, 200, 100);
-    Rectangle Stage3 = new Rectangle(840 / 2 + 150, 450, 200, 100);
+    Rectangle Stage1;
+    Rectangle Stage2;
+    Rectangle Stage3;
     JFrame fr = new JFrame("GAO Space");
     Sound sound = new Sound();
 
@@ -17,6 +17,9 @@ public class Menu extends JPanel implements MouseListener {
     //Constructure
     public Menu() {
 
+        Stage1 = new Rectangle(840 / 2 - 350, 450, 200, 100);
+        Stage2 = new Rectangle(840 / 2 - 100, 450, 200, 100);
+        Stage3 = new Rectangle(840 / 2 + 150, 450, 200, 100);
         ImageIcon img = new ImageIcon("img/MenuBG.PNG");
         background = img.getImage();
         sound.playMusic(0);

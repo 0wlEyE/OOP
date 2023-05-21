@@ -1,14 +1,11 @@
-
 import javax.swing.*;
 
 public class FrameStage extends StageSelect{
 
-    JProgressBar bar;
     public JFrame frame;
 
     public FrameStage(){
 
-        bar = new JProgressBar();
         frame = new JFrame("GAO Space");
 
         //Add Object
