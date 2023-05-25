@@ -1,10 +1,9 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
+import java.io.*;
 import javax.swing.*;
 
-public class RaiRubRaiJai implements ActionListener{
+public class RaiRubRaiJai implements ActionListener, WindowListener{
     JFrame frame;
     JDesktopPane desktp;
     JButton b1;
@@ -12,6 +11,8 @@ public class RaiRubRaiJai implements ActionListener{
     Table table;
     JMenuItem refresh;
     JMenuBar bar;
+    Wallet wallet;
+    JTable tab;
     
     public RaiRubRaiJai(){
         //Create Object
@@ -51,4 +52,49 @@ public class RaiRubRaiJai implements ActionListener{
             table.setLocation(450, 20);
         }
     }
+    @Override
+    public void windowOpened(WindowEvent e) {
+        try(FileInputStream fout = new FileInputStream("Wallet.dat");
+                ObjectInputStream oout = new ObjectInputStream(fout);){
+            wallet = (Wallet) oout.readObject();
+            data.getWallet().setBalance(wallet.getBalance());
+            data.getWallet().setIncome(wallet.getIncome());
+            data.getWallet().setExpense(wallet.getExpense());
+        }catch (IOException ex){} 
+        catch (ClassNotFoundException ex) {}
+
+        try(FileInputStream fout = new FileInputStream("Table.dat");
+                ObjectInputStream oout = new ObjectInputStream(fout);){
+            tab = (JTable) oout.readObject();
+            table.setTable(tab);
+        }catch (IOException ex){}
+        catch (ClassNotFoundException ex) {}
+    }
+    @Override
+    public void windowClosing(WindowEvent e) {
+        try(FileOutputStream fout = new FileOutputStream("Wallet.dat");
+                ObjectOutputStream oout = new ObjectOutputStream(fout);){
+            // wallet.setBalance(data.getWallet().getBalance());
+            // wallet.setIncome(data.getWallet().getIncome());
+            // wallet.setExpense(data.getWallet().getExpense());
+            System.out.println(data.getWallet().getBalance());
+            oout.writeObject(data.getWallet());
+        }catch (IOException ex){}
+
+        try(FileOutputStream fout = new FileOutputStream("Table.dat");
+                ObjectOutputStream oout = new ObjectOutputStream(fout);){
+            tab = table.getTable();
+            oout.writeObject(tab);
+        }catch (IOException ex){}
+    }
+    @Override
+    public void windowClosed(WindowEvent e) {}
+    @Override
+    public void windowIconified(WindowEvent e) {}
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+    @Override
+    public void windowActivated(WindowEvent e) {}
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }

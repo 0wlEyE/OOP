@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Data extends JInternalFrame implements ActionListener, FocusListener{
+public class Data extends JInternalFrame implements ActionListener, FocusListener {
     JLabel balance, income, expense, ba_txt, in_txt, ex_txt;
     JRadioButton in_tick, ex_tick;
     ButtonGroup group;
@@ -10,11 +10,12 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
     JTextField amount, description;
     Wallet wallet;
     JButton confirm;
+    Double value;
     public Data(){
         new JInternalFrame();
-        wallet = new Wallet();
+        wallet = new Wallet(0.0, 0.0, 0.0);
 
-        //Upper part     
+        //Upper Part     
         data = new JPanel(new GridLayout(2, 1));
         
         ba_Lay = new JPanel(new GridLayout(2, 1));
@@ -60,12 +61,8 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
         
         data.add(ba_Lay);
         data.add(inEx_Lay);
-        //Upper part
 
-        
-
-
-        //Lower part
+        //Lower Part
         action = new JPanel(new GridLayout(4, 1));
         tick_Lay = new JPanel(new FlowLayout());
         amount_Lay = new JPanel(new FlowLayout());
@@ -73,12 +70,12 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
         con_Lay = new JPanel(new FlowLayout());
 
         in_tick = new JRadioButton("Income", false);
-        in_tick.setFont(new Font("Serif", Font.BOLD, 20));
+        in_tick.setFont(new Font("Serif", Font.BOLD, 25));
         in_tick.setBackground(new Color(0, 128, 255));
         in_tick.setFocusPainted(false);
 
         ex_tick = new JRadioButton("Expense", false);
-        ex_tick.setFont(new Font("Serif", Font.BOLD, 20));
+        ex_tick.setFont(new Font("Serif", Font.BOLD, 25));
         ex_tick.setBackground(new Color(0, 128, 255));
         ex_tick.setFocusPainted(false);
         
@@ -87,14 +84,14 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
         description = new JTextField("Description", 16);
         description.setFont(new Font("Serif", Font.BOLD, 24));
 
-        confirm = new JButton("Confirm");
+        confirm = new JButton("Confirm!");
         confirm.setFont(new Font("Serif", Font.BOLD, 24));
         con_Lay.add(confirm);
         con_Lay.setBackground(new Color(0, 128, 255));
 
         group = new ButtonGroup();
         group.add(in_tick); group.add(ex_tick);
-        tick_Lay.add(in_tick); tick_Lay.add(ex_tick);
+        tick_Lay.add(ex_tick); tick_Lay.add(in_tick);
         tick_Lay.setBackground(new Color(0, 128, 255));
         
         amount_Lay.add(amount); desc_Lay.add(description);
@@ -105,22 +102,74 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
         action.add(amount_Lay); action.add(desc_Lay);
         action.add(con_Lay);
 
-        //Lower part
+        action.setBackground(new Color(0, 128, 255));
+
+        //Listener Part
         amount.addFocusListener(this);
         description.addFocusListener(this);
-
-        action.setBackground(new Color(0, 128, 255));
+        confirm.addActionListener(this);
         
         setBounds(90, 20,350 , 500);
         setVisible(true);
-        //แบ่งบนล่าง
+
+        //Seperate Upper & Lower
         this.setLayout(new GridLayout(2, 1));
         this.add(data);
         this.add(action);
     }
+
+    public Wallet getWallet(){
+        return wallet;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // press confirm
+        if (e.getSource().equals(confirm)){
+            // if amount != numberic
+            try{
+                value = Double.parseDouble(amount.getText());
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(null, "Please input only number!!", "Number Format Error", JOptionPane.ERROR_MESSAGE);
+            }
+            // if amount <= 0
+            if(value <= 0){
+                JOptionPane.showMessageDialog(null, "Number must be larger than 0!!", "0 Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                //if in & ex not selected
+                if(in_tick.isSelected() == false && ex_tick.isSelected() == false){
+                    JOptionPane.showMessageDialog(null, "Please select option!!", "Option not selected", JOptionPane.ERROR_MESSAGE);
+                } 
+                else{
+                    //if ex selected
+                    if (ex_tick.isSelected()){
+                        wallet.setBalance(wallet.getBalance() - value);
+                        wallet.setExpense(wallet.getExpense() + value);
+                    }
+                    //if in selected
+                    else if (in_tick.isSelected()){
+                        wallet.setBalance(wallet.getBalance() + value);
+                        wallet.setIncome(wallet.getIncome() + value);
+                    }
+                    if(description.getText().equals("Description")){
+                        description.setText("----------");
+                    }
+                    update();
+                }
+            }
+        }
+    }
+    //set data in table & return to begining
+    public void update(){
+        Table.setRow(description.getText(), amount.getText());
+        balance.setText(wallet.getBalance() + "");
+        income.setText(wallet.getIncome() + "");
+        expense.setText(wallet.getExpense() + "");
+        amount.setText("Amount");
+        description.setText("Description");
+        group.clearSelection();
+        value = null;
     }
     @Override
     public void focusGained(FocusEvent e) {

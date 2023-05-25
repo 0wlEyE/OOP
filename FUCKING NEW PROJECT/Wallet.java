@@ -1,12 +1,17 @@
-public class Wallet {
+import java.io.*;
+
+public class Wallet implements Serializable {
     private double balance;
     private double income;
     private double expense;
 
     public Wallet(){
-        setBalance(0.00);
-        setIncome(0.0);
-        setExpense(0.0);
+        
+    }
+    public Wallet(double balance, double income, double expense){
+        this.balance = balance;
+        this.income = income;
+        this.expense = expense;
     }
 
     public double getBalance() {
