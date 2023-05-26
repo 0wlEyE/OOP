@@ -1,10 +1,10 @@
 import java.awt.*;
+import java.io.*;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.table.*;
-import java.io.*;
 
-public class Table extends JInternalFrame implements SaveLoadable{
+public class Table extends JInternalFrame{
     private JPanel panel;
     private JScrollPane scrollPane;
     private static JTable table;
@@ -18,7 +18,7 @@ public class Table extends JInternalFrame implements SaveLoadable{
         panel.setLayout(new BorderLayout());
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(0, 0, 350, 500);
+        scrollPane.setBounds(0, 0, 350, 400);
         add(scrollPane);
 
         table = new JTable();
@@ -33,7 +33,7 @@ public class Table extends JInternalFrame implements SaveLoadable{
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
         add(panel);
-        setBounds(450, 20,350 , 500);
+        setBounds(450, 20,350 , 400);
         setVisible(true);
     }
     public static void setRow(String desc, String inEx){
@@ -51,8 +51,8 @@ public class Table extends JInternalFrame implements SaveLoadable{
     public static JTable getTable(){
         return table;
     }
-    @Override
-    public void savedata() {
+
+    public void saveData() {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter("Table.txt") );){
             for(int i = 0; i < Table.getTable().getRowCount(); i++){
                 for(int j = 0; j < Table.getTable().getColumnCount(); j++){
@@ -62,8 +62,8 @@ public class Table extends JInternalFrame implements SaveLoadable{
             }
         }catch (IOException ex){}
     }
-    @Override
-    public void loaddata() {
+    
+    public void loadData() {
         try(BufferedReader br = new BufferedReader(new FileReader("Table.txt") );){
             DefaultTableModel model = (DefaultTableModel)table.getModel();
             Object[] lines = br.lines().toArray();
