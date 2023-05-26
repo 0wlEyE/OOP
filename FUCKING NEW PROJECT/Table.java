@@ -8,7 +8,7 @@ public class Table extends JInternalFrame{
     private JScrollPane scrollPane;
     private static JTable table;
     private static LocalDate time = LocalDate.now();
-    private static int row = 0;
+    private static int row;
 
     public Table(){
         new JInternalFrame();
@@ -37,16 +37,17 @@ public class Table extends JInternalFrame{
     }
     public static void setRow(String desc, String inEx){
         DefaultTableModel model = (DefaultTableModel)table.getModel();
+        row = table.getRowCount();
         model.addRow(new Object[0]);
         model.setValueAt(time, row, 0);
         model.setValueAt(desc, row, 1);   
         model.setValueAt(inEx, row, 2);
         row += 1;
     }
-    public void setTable(JTable tab){
+    public static void setTable(JTable tab){
         table = tab;
     }
-    public JTable getTable(){
+    public static JTable getTable(){
         return table;
     }
 }

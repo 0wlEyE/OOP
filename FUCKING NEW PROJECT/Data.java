@@ -13,8 +13,9 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
     Double value;
     public Data(){
         new JInternalFrame();
-        wallet = new Wallet(0.0, 0.0, 0.0);
-
+        if (wallet == null){
+            wallet = new Wallet(0.0, 0.0, 0.0);
+        }
         //Upper Part     
         data = new JPanel(new GridLayout(2, 1));
         
@@ -155,14 +156,15 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
                     if(description.getText().equals("Description")){
                         description.setText("----------");
                     }
-                    update();
+                Table.setRow(description.getText(), amount.getText());
+                update();
                 }
             }
         }
     }
     //set data in table & return to begining
     public void update(){
-        Table.setRow(description.getText(), amount.getText());
+        Table.setTable(Table.getTable());
         balance.setText(wallet.getBalance() + "");
         income.setText(wallet.getIncome() + "");
         expense.setText(wallet.getExpense() + "");

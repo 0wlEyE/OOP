@@ -2,8 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
-public class RaiRubRaiJai implements ActionListener, WindowListener{
+public class RaiRubRaiJai implements ActionListener, WindowListener, Serializable{
     JFrame frame;
     JDesktopPane desktp;
     JButton b1;
@@ -11,7 +12,7 @@ public class RaiRubRaiJai implements ActionListener, WindowListener{
     Table table;
     JMenuItem refresh;
     JMenuBar bar;
-    Wallet wallet;
+    Wallet wallet = new Wallet();
     JTable tab;
     
     public RaiRubRaiJai(){
@@ -25,6 +26,8 @@ public class RaiRubRaiJai implements ActionListener, WindowListener{
         frame.setJMenuBar(bar);
         
         refresh.addActionListener(this);
+        frame.addWindowListener(this);
+
         bar.add(refresh);
         desktp.add(data);
         desktp.add(table);
@@ -60,31 +63,33 @@ public class RaiRubRaiJai implements ActionListener, WindowListener{
             data.getWallet().setBalance(wallet.getBalance());
             data.getWallet().setIncome(wallet.getIncome());
             data.getWallet().setExpense(wallet.getExpense());
+            data.update();
         }catch (IOException ex){} 
         catch (ClassNotFoundException ex) {}
 
-        try(FileInputStream fout = new FileInputStream("Table.dat");
-                ObjectInputStream oout = new ObjectInputStream(fout);){
-            tab = (JTable) oout.readObject();
-            table.setTable(tab);
+        try(BufferedReader br = new BufferedReader(new FileReader("Table.txt") );){
+            DefaultTableModel model = (DefaultTableModel)Table.getTable().getModel();
+            Object[] lines = br.lines().toArray();
+            for(int i = 0; i < lines.length; i++){
+                String[] row = lines[i].toString().split(" ");
+                model.addRow(row);
+            }
         }catch (IOException ex){}
-        catch (ClassNotFoundException ex) {}
     }
     @Override
     public void windowClosing(WindowEvent e) {
         try(FileOutputStream fout = new FileOutputStream("Wallet.dat");
                 ObjectOutputStream oout = new ObjectOutputStream(fout);){
-            // wallet.setBalance(data.getWallet().getBalance());
-            // wallet.setIncome(data.getWallet().getIncome());
-            // wallet.setExpense(data.getWallet().getExpense());
-            System.out.println(data.getWallet().getBalance());
             oout.writeObject(data.getWallet());
         }catch (IOException ex){}
 
-        try(FileOutputStream fout = new FileOutputStream("Table.dat");
-                ObjectOutputStream oout = new ObjectOutputStream(fout);){
-            tab = table.getTable();
-            oout.writeObject(tab);
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("Table.txt") );){
+            for(int i = 0; i < Table.getTable().getRowCount(); i++){
+                for(int j = 0; j < Table.getTable().getColumnCount(); j++){
+                    bw.write(Table.getTable().getValueAt(i, j).toString() + " ");
+                }
+                bw.newLine();
+            }
         }catch (IOException ex){}
     }
     @Override
