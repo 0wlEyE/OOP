@@ -9,6 +9,7 @@ public class RaiRubRaiJai extends RubJaiWindow implements ActionListener, Serial
     JButton b1;
     Data data;
     Table table;
+    Success success;
     JMenuItem refresh;
     JMenuBar bar;
     Wallet wallet = new Wallet();
@@ -22,6 +23,7 @@ public class RaiRubRaiJai extends RubJaiWindow implements ActionListener, Serial
         bar = new JMenuBar();
         data = new Data();
         table = new Table();
+        success = new Success();
         frame.setJMenuBar(bar);
         
         refresh.addActionListener(this);
@@ -30,6 +32,7 @@ public class RaiRubRaiJai extends RubJaiWindow implements ActionListener, Serial
         bar.add(refresh);
         desktp.add(data);
         desktp.add(table);
+        desktp.add(success);
         frame.add(desktp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
@@ -52,16 +55,19 @@ public class RaiRubRaiJai extends RubJaiWindow implements ActionListener, Serial
         if (e.getSource().equals(refresh)){
             data.setLocation(90, 20);
             table.setLocation(450, 20);
+            success.setLocation(450, 420);
         }
     }
+
     @Override
     public void windowOpened(WindowEvent e) {
-        data.loaddata();
-        table.loaddata();
+        data.loadData();
+        table.loadData();
     }
+
     @Override
     public void windowClosing(WindowEvent e) {
-        data.savedata();
-        table.savedata();
+        data.saveData();
+        table.saveData();
     }
 }
