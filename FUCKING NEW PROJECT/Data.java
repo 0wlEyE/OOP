@@ -1,8 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
 
-public class Data extends JInternalFrame implements ActionListener, FocusListener {
+public class Data extends JInternalFrame implements ActionListener, FocusListener, SaveLoadable {
     JLabel balance, income, expense, ba_txt, in_txt, ex_txt;
     JRadioButton in_tick, ex_tick;
     ButtonGroup group;
@@ -198,5 +199,26 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
                 description.setText("Description");
             }
         }
+    }
+
+    @Override
+    public void savedata() {
+        try(FileOutputStream fout = new FileOutputStream("Wallet.dat");
+                ObjectOutputStream oout = new ObjectOutputStream(fout);){
+            oout.writeObject(getWallet());
+        }catch (IOException ex){}
+    }
+
+    @Override
+    public void loaddata() {
+        try(FileInputStream fout = new FileInputStream("Wallet.dat");
+                ObjectInputStream oout = new ObjectInputStream(fout);){
+            wallet = (Wallet) oout.readObject();
+            getWallet().setBalance(wallet.getBalance());
+            getWallet().setIncome(wallet.getIncome());
+            getWallet().setExpense(wallet.getExpense());
+            update();
+        }catch (IOException ex){} 
+        catch (ClassNotFoundException ex) {}
     }
 }

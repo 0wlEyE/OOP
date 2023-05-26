@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class RaiRubRaiJai implements ActionListener, WindowListener, Serializable{
     JFrame frame;
@@ -57,40 +56,13 @@ public class RaiRubRaiJai implements ActionListener, WindowListener, Serializabl
     }
     @Override
     public void windowOpened(WindowEvent e) {
-        try(FileInputStream fout = new FileInputStream("Wallet.dat");
-                ObjectInputStream oout = new ObjectInputStream(fout);){
-            wallet = (Wallet) oout.readObject();
-            data.getWallet().setBalance(wallet.getBalance());
-            data.getWallet().setIncome(wallet.getIncome());
-            data.getWallet().setExpense(wallet.getExpense());
-            data.update();
-        }catch (IOException ex){} 
-        catch (ClassNotFoundException ex) {}
-
-        try(BufferedReader br = new BufferedReader(new FileReader("Table.txt") );){
-            DefaultTableModel model = (DefaultTableModel)Table.getTable().getModel();
-            Object[] lines = br.lines().toArray();
-            for(int i = 0; i < lines.length; i++){
-                String[] row = lines[i].toString().split(" ");
-                model.addRow(row);
-            }
-        }catch (IOException ex){}
+        data.loaddata();
+        table.loaddata();
     }
     @Override
     public void windowClosing(WindowEvent e) {
-        try(FileOutputStream fout = new FileOutputStream("Wallet.dat");
-                ObjectOutputStream oout = new ObjectOutputStream(fout);){
-            oout.writeObject(data.getWallet());
-        }catch (IOException ex){}
-
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter("Table.txt") );){
-            for(int i = 0; i < Table.getTable().getRowCount(); i++){
-                for(int j = 0; j < Table.getTable().getColumnCount(); j++){
-                    bw.write(Table.getTable().getValueAt(i, j).toString() + " ");
-                }
-                bw.newLine();
-            }
-        }catch (IOException ex){}
+        data.savedata();
+        table.savedata();
     }
     @Override
     public void windowClosed(WindowEvent e) {}

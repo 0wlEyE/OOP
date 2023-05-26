@@ -2,8 +2,9 @@ import java.awt.*;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.table.*;
+import java.io.*;
 
-public class Table extends JInternalFrame{
+public class Table extends JInternalFrame implements SaveLoadable{
     private JPanel panel;
     private JScrollPane scrollPane;
     private static JTable table;
@@ -49,5 +50,27 @@ public class Table extends JInternalFrame{
     }
     public static JTable getTable(){
         return table;
+    }
+    @Override
+    public void savedata() {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("Table.txt") );){
+            for(int i = 0; i < Table.getTable().getRowCount(); i++){
+                for(int j = 0; j < Table.getTable().getColumnCount(); j++){
+                    bw.write(table.getValueAt(i, j).toString() + " ");
+                }
+                bw.newLine();
+            }
+        }catch (IOException ex){}
+    }
+    @Override
+    public void loaddata() {
+        try(BufferedReader br = new BufferedReader(new FileReader("Table.txt") );){
+            DefaultTableModel model = (DefaultTableModel)table.getModel();
+            Object[] lines = br.lines().toArray();
+            for(int i = 0; i < lines.length; i++){
+                String[] row = lines[i].toString().split(" ");
+                model.addRow(row);
+            }
+        }catch (IOException ex){}
     }
 }
