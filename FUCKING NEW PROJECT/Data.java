@@ -93,7 +93,7 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
 
         group = new ButtonGroup();
         group.add(in_tick); group.add(ex_tick);
-        tick_Lay.add(ex_tick); tick_Lay.add(in_tick);
+        tick_Lay.add(in_tick); tick_Lay.add(ex_tick);
         tick_Lay.setBackground(new Color(0, 128, 255));
         
         amount_Lay.add(amount); desc_Lay.add(description);

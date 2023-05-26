@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 
-public class RaiRubRaiJai implements ActionListener, WindowListener, Serializable{
+public class RaiRubRaiJai extends RubJaiWindow implements ActionListener, Serializable{
     JFrame frame;
     JDesktopPane desktp;
     JButton b1;
@@ -64,14 +64,4 @@ public class RaiRubRaiJai implements ActionListener, WindowListener, Serializabl
         data.savedata();
         table.savedata();
     }
-    @Override
-    public void windowClosed(WindowEvent e) {}
-    @Override
-    public void windowIconified(WindowEvent e) {}
-    @Override
-    public void windowDeiconified(WindowEvent e) {}
-    @Override
-    public void windowActivated(WindowEvent e) {}
-    @Override
-    public void windowDeactivated(WindowEvent e) {}
 }
