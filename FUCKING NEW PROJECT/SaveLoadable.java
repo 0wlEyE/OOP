@@ -1,4 +1,4 @@
 public interface SaveLoadable {
-    public abstract void savedata();
-    public abstract void loaddata();   
+    public abstract void saveData();
+    public abstract void loadData();   
 }

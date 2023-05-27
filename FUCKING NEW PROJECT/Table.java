@@ -1,15 +1,15 @@
 import java.awt.*;
-import java.io.*;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.table.*;
+import java.io.*;
 
-public class Table extends JInternalFrame{
+public class Table extends JInternalFrame implements SaveLoadable{
+    private static LocalDate time = LocalDate.now();
+    private static int row;
     private JPanel panel;
     private JScrollPane scrollPane;
     private static JTable table;
-    private static LocalDate time = LocalDate.now();
-    private static int row;
 
     public Table(){
         new JInternalFrame();
@@ -18,11 +18,12 @@ public class Table extends JInternalFrame{
         panel.setLayout(new BorderLayout());
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(0, 0, 350, 400);
+        scrollPane.setBounds(0, 0, 350, 390);
         add(scrollPane);
 
         table = new JTable();
         scrollPane.setViewportView(table);
+        table.setDefaultRenderer(Object.class, new CustomCell());
 
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         model.addColumn("Date"); 
@@ -33,7 +34,7 @@ public class Table extends JInternalFrame{
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
         add(panel);
-        setBounds(450, 20,350 , 400);
+        setBounds(450, 20,350 , 390);
         setVisible(true);
     }
     public static void setRow(String desc, String inEx){
@@ -51,7 +52,7 @@ public class Table extends JInternalFrame{
     public static JTable getTable(){
         return table;
     }
-
+    @Override
     public void saveData() {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter("Table.txt") );){
             for(int i = 0; i < Table.getTable().getRowCount(); i++){
@@ -62,7 +63,7 @@ public class Table extends JInternalFrame{
             }
         }catch (IOException ex){}
     }
-    
+    @Override
     public void loadData() {
         try(BufferedReader br = new BufferedReader(new FileReader("Table.txt") );){
             DefaultTableModel model = (DefaultTableModel)table.getModel();
@@ -72,5 +73,8 @@ public class Table extends JInternalFrame{
                 model.addRow(row);
             }
         }catch (IOException ex){}
+    }
+    public JTable getColumnModel() {
+        return null;
     }
 }
