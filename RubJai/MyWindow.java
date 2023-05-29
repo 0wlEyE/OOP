@@ -1,11 +1,15 @@
 import java.awt.event.*;
 
 public abstract class MyWindow implements WindowListener {
-    public static void updateBar() {
+    public void updateBar() {
         Success.setWant(" ");
         Success.setValue(0);
         Success.setPrice(0);
         Success.update();
+    }
+    public void updateGoal(GoalFrame frame){
+        frame.name.setText("");
+        frame.money.setText(String.valueOf(0.0));
     }
     @Override
     public abstract void windowOpened(WindowEvent e);

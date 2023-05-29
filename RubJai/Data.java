@@ -138,15 +138,15 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
         if (e.getSource().equals(confirm)){
             // if amount != numberic
             try {
-                val = Double.parseDouble(amount.getText());
+                val = Double.parseDouble(amount.getText());      
             } catch (NumberFormatException ex){
                 JOptionPane.showMessageDialog(null, "Please input only number!!", "Number Format Error.", JOptionPane.ERROR_MESSAGE);
-            }
+            } 
             // if amount <= 0
-            if (val < 0){
+            if (val <= 0){
                 JOptionPane.showMessageDialog(null, "Number must be larger than 0!!", "0 Error.", JOptionPane.ERROR_MESSAGE);
             }
-            else {
+            else if (val > 0){
                 //if in & ex not selected
                 if (in_tick.isSelected() == false && ex_tick.isSelected() == false){
                     JOptionPane.showMessageDialog(null, "Please select option!!", "Option not selected.", JOptionPane.ERROR_MESSAGE);
@@ -183,7 +183,7 @@ public class Data extends JInternalFrame implements ActionListener, FocusListene
         amount.setText("Amount");
         description.setText("Description");
         group.clearSelection();
-        val = null;
+        val = 0.0;
     }
     @Override
     public void focusGained(FocusEvent e) {

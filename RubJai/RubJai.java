@@ -17,6 +17,7 @@ public class RubJai extends MyWindow implements ActionListener, Serializable{
     Success success;
     Wallet wallet;
     ImageIcon hi;
+    GoalFrame goalframe;
     
     public RubJai(){
         //Create Object
@@ -57,14 +58,7 @@ public class RubJai extends MyWindow implements ActionListener, Serializable{
         frame.setVisible(true);
         desktp.setBackground(new Color(26, 30, 30));
     }
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } SwingUtilities.invokeLater(() -> { new RubJai(); });
-    }
-   
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(refresh)){
@@ -72,7 +66,7 @@ public class RubJai extends MyWindow implements ActionListener, Serializable{
             table.setLocation(450, 20);
             success.setLocation(450, 420);
         } else if (e.getSource().equals(plan)){
-            new GoalFrame();
+            goalframe = new GoalFrame();
         } else if (e.getSource().equals(reset)){
             int dialoguebutton = JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING!!!", JOptionPane.YES_NO_OPTION);
             if (dialoguebutton == JOptionPane.YES_OPTION){
@@ -81,6 +75,10 @@ public class RubJai extends MyWindow implements ActionListener, Serializable{
                 Data.wallet.setIncome(0);
                 Data.update();
                 updateBar();
+                goalframe = new GoalFrame();
+                updateGoal(goalframe);
+                goalframe.saveData();
+                goalframe.frame.dispose();
                 DefaultTableModel model = (DefaultTableModel) Table.getTable().getModel();
                 int rowCount = model.getRowCount();
                 for (int i = rowCount - 1; i >= 0; i--){
@@ -104,4 +102,12 @@ public class RubJai extends MyWindow implements ActionListener, Serializable{
         table.saveData();
         success.saveData();
     }
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } SwingUtilities.invokeLater(() -> { new RubJai(); });
+    }
 }
+

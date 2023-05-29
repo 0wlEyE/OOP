@@ -5,9 +5,10 @@ import javax.swing.*;
 
 public class GoalFrame extends MyWindow implements ActionListener, SaveLoadable{
     static Goal goal;
+    JTextField name;
+    JTextField money;
     JFrame frame;
     JPanel panel1, panel2, panel_button, panel_name, panel_money;
-    JTextField name, money;
     JButton save, buy, clear;
     JLabel name_txt, money_txt;
     double value;
